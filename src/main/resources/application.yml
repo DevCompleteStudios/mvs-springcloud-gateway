@@ -1,0 +1,22 @@
+spring:
+    cloud:
+        gateway:
+            routes:
+            - id: mvs-products
+              uri: lb://mvs-products
+              predicates:
+              - Path=/api/products/**
+              filters:
+              - StripPrefix=2
+              - name: SampleCookie
+                args:
+                  #Si alguno falta no se pasa. Esto viene de los filtros globales (SampleCookie)
+                  message: Hola mi mensaje personalizado para productos
+                  name: user
+                  value: Yael
+            - id: mvs-items
+              uri: lb://msv-items
+              predicates:
+              - Path=/api/items/**
+              filters:
+              - StripPrefix=2
