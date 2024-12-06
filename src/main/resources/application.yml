@@ -6,6 +6,11 @@ spring:
               uri: lb://mvs-products
               predicates:
               - Path=/api/products/**
+              # - Header=token, 12345
+              # - Method=GET, POST
+              # - Query=color, rojo
+              # - Cookie=color, azul
+              # - Header=Content-Type, application/json
               filters:
               - StripPrefix=2
               - name: SampleCookie
@@ -20,3 +25,8 @@ spring:
               - Path=/api/items/**
               filters:
               - StripPrefix=2
+              # Factories que vienen por defecto
+              - AddRequestHeader=token-request, abcdefghijk
+              - AddResponseHeader=token-response, 121324121
+              - AddRequestParameter=name, Yael
+              - SetResponseHeader=Content-Type, text/plain
