@@ -7,6 +7,7 @@ spring:
               predicates:
               - Path=/api/products/**
               # - Header=token, 12345
+              # - Header=token, \d+ # expresiones regulares
               # - Method=GET, POST
               # - Query=color, rojo
               # - Cookie=color, azul
@@ -14,11 +15,11 @@ spring:
               filters:
               - StripPrefix=2
               - name: SampleCookie
-                args:
-                  #Si alguno falta no se pasa. Esto viene de los filtros globales (SampleCookie)
-                  message: Hola mi mensaje personalizado para productos
-                  name: user
-                  value: Yael
+                # args:
+                #   #Si alguno falta no se pasa. Esto viene de los filtros globales (SampleCookie)
+                #   message: Hola mi mensaje personalizado para productos
+                #   name: user
+                #   value: Yael
             - id: mvs-items
               uri: lb://msv-items
               predicates:
