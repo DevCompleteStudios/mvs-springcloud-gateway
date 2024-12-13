@@ -21,9 +21,41 @@ resilience4j:
 
 
 spring:
+    security:
+      oauth2:
+        resourceserver:
+          jwt:
+            issuer-uri: http://127.0.0.1:9100
+        client:
+          registration:
+            client-app:
+              provider: spring
+              client-id: gateway-app
+              client-secret: 12345
+              authorization-grant-type: authorization_code
+              redirect-uri: http://127.0.0.1:9090/authorized
+              scope:
+              - openid
+              - profile
+              client-name: client-app
+          provider:
+            spring:
+              issuer-uri: http://127.0.0.1:9100
     cloud:
         gateway:
             routes:
+            - id: msv-oauth
+              uri: lb://msv-oauth
+              predicates:
+              - Path=/api/security/**
+              filters:
+              - StripPrefix=2
+            - id: msv-users
+              uri: lb://msv-users
+              predicates:
+              - Path=/api/users/**
+              filters:
+              - StripPrefix=2
             - id: mvs-products
               uri: lb://mvs-products
               predicates:
